@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * and open the template in the editor.
  */
 
-/**
+/**qqw
  *
  * @author user
  */
@@ -190,7 +190,7 @@ public class addproduct extends javax.swing.JFrame {
 add.setVisible(true);add.setLocationRelativeTo(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+//d
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 product_class pc = new product_class();
 
