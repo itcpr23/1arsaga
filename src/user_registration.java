@@ -1,4 +1,11 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -18,6 +25,35 @@ public class user_registration extends javax.swing.JFrame {
      */
     public user_registration() {
         initComponents();
+        
+    }
+    public void login(){
+        String user = un.getText();
+        String pass = new String(pw.getPassword());
+        
+        String sql = "select * from reg where USERNAME=? and PASSWORD=?;";
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/register?", "root", "");
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, user);
+            pstmt.setString(2, pass);
+            
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                addproduct adp = new addproduct();
+                adp.setVisible(true);
+                adp.setLocationRelativeTo(null);
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "invalid username and password");
+            }
+            
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(user_registration.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(user_registration.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 public void clear_reg_txtfld(){
      fntf.setText(null);
@@ -46,9 +82,13 @@ public void clear_reg_txtfld(){
         pwpf = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        un = new javax.swing.JTextField();
+        pw = new javax.swing.JPasswordField();
+        jButton3 = new javax.swing.JButton();
 
         Registration_frame.setMinimumSize(new java.awt.Dimension(400, 400));
-        Registration_frame.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jLabel1.setText("Firstname:");
 
@@ -122,21 +162,53 @@ public void clear_reg_txtfld(){
             }
         });
 
+        jLabel5.setText("USERNAME:");
+
+        jLabel6.setText("PASSWORD:");
+
+        jButton3.setText("LOGIN");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(142, 142, 142)
-                .addComponent(jButton1)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(un)
+                    .addComponent(pw))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(un, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pw)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(64, 64, 64))
+                .addContainerGap())
         );
 
         pack();
@@ -160,6 +232,11 @@ int x = reg.register(fn, ln, un, pw);
  this.clear_reg_txtfld();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+login();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,12 +278,17 @@ int x = reg.register(fn, ln, un, pw);
     private javax.swing.JTextField fntf;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField lntf;
+    private javax.swing.JPasswordField pw;
     private javax.swing.JPasswordField pwpf;
+    private javax.swing.JTextField un;
     private javax.swing.JTextField untf;
     // End of variables declaration//GEN-END:variables
 }
