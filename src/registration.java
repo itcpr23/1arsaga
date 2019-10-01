@@ -18,14 +18,14 @@ import java.util.logging.Logger;
  */
 public class registration {
     
-    
+    conn con = new conn();
      public int register(String firstname,String lastname,String username, String password){
         int r = 0;
         try{
              Class.forName("com.mysql.jdbc.Driver");
-             Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/register?" , "root", "");
+             Connection conn = (Connection) DriverManager.getConnection(con.url, con.username, con.password);
              
-              String sql = "insert into reg values(?,?,?,?)";
+              String sql = "insert into reg values(null,?,?,?,?)";
             PreparedStatement pstmt = (PreparedStatement) conn.prepareStatement(sql);
             
             pstmt.setString(1, username);
