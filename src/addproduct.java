@@ -65,11 +65,11 @@ public class addproduct extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        pdn = new javax.swing.JTextField();
+        pdna = new javax.swing.JTextField();
         qty = new javax.swing.JSpinner();
         prce = new javax.swing.JFormattedTextField();
         subbtn = new javax.swing.JButton();
-        svbtn = new javax.swing.JButton();
+        svbtns = new javax.swing.JButton();
         prdid = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbls1 = new javax.swing.JTable();
@@ -96,10 +96,10 @@ public class addproduct extends javax.swing.JFrame {
             }
         });
 
-        svbtn.setText("SAVE");
-        svbtn.addActionListener(new java.awt.event.ActionListener() {
+        svbtns.setText("SAVE");
+        svbtns.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                svbtnActionPerformed(evt);
+                svbtnsActionPerformed(evt);
             }
         });
 
@@ -120,7 +120,7 @@ public class addproduct extends javax.swing.JFrame {
                                 .addGroup(addLayout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(pdn, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(pdna, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(addLayout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -129,7 +129,7 @@ public class addproduct extends javax.swing.JFrame {
                         .addGap(160, 160, 160)
                         .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(subbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(svbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(svbtns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(addLayout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(prdid)))
@@ -142,7 +142,7 @@ public class addproduct extends javax.swing.JFrame {
                 .addComponent(prdid, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pdn, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(pdna, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34)
                 .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -155,7 +155,7 @@ public class addproduct extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(subbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(svbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(svbtns, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -238,7 +238,7 @@ add.setVisible(true);add.setLocationRelativeTo(null);
     private void subbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subbtnActionPerformed
 product_class pc = new product_class();
 
-String pdname = pdn.getText();
+String pdname = pdna.getText();
 int qua = (int)qty.getValue();
 String prc = prce.getText();
 
@@ -292,17 +292,17 @@ if(row==-1){
         String pdqu = tbls1.getValueAt(row, 2).toString();
         String pdpri = tbls1.getValueAt(row, 3).toString();
         prdid.setText(id);
-        pdn.setText(pdname);
+        pdna.setText(pdname);
         prce.setText(pdpri);
         this.setVisible(false);
         add.setVisible(true);
     }
-}subbtn.setVisible(false); svbtn.setVisible(true);qty.setEnabled(false);add.setLocationRelativeTo(null);this.setLocationRelativeTo(null);        // TODO add your handling code here:
+}subbtn.setVisible(false); svbtns.setVisible(true);qty.setEnabled(false);add.setLocationRelativeTo(null);this.setLocationRelativeTo(null);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void svbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtnActionPerformed
+    private void svbtnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtnsActionPerformed
 int id = Integer.parseInt(prdid.getText());
-String pdname = pdn.getText();
+String pdname = pdna.getText();
 String pdqu = qty.getToolTipText();
 String pdpri = prce.getText();
 
@@ -314,11 +314,11 @@ try{
     pstmt.setString(1, pdname);
     pstmt.setString(2, pdpri);
     pstmt.setInt(3, id);
-    if(pdn.getText().equals("") || prce.getText().equals("")){
+    if(pdna.getText().equals("") || prce.getText().equals("")){
     JOptionPane.showMessageDialog(add, "PLEASE FILL UP ALL FIELDS","WARNING",JOptionPane.WARNING_MESSAGE);    
     }else{
         pstmt.executeUpdate();
-        pdn.setText("");
+        pdna.setText("");
         prce.setText("");
         add.setVisible(false);
         addproduct adprt = new addproduct();
@@ -331,7 +331,7 @@ try{
             Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_svbtnActionPerformed
+    }//GEN-LAST:event_svbtnsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,12 +377,12 @@ try{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField pdn;
+    private javax.swing.JTextField pdna;
     private javax.swing.JFormattedTextField prce;
     private javax.swing.JLabel prdid;
     private javax.swing.JSpinner qty;
     private javax.swing.JButton subbtn;
-    private javax.swing.JButton svbtn;
+    private javax.swing.JButton svbtns;
     private javax.swing.JTable tbls1;
     // End of variables declaration//GEN-END:variables
 
