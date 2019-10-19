@@ -1,12 +1,14 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -66,10 +68,14 @@ public class addproduct extends javax.swing.JFrame {
         pdn = new javax.swing.JTextField();
         qty = new javax.swing.JSpinner();
         prce = new javax.swing.JFormattedTextField();
-        jButton2 = new javax.swing.JButton();
+        subbtn = new javax.swing.JButton();
+        svbtn = new javax.swing.JButton();
+        prdid = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbls1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         add.setMinimumSize(new java.awt.Dimension(425, 340));
 
@@ -83,10 +89,17 @@ public class addproduct extends javax.swing.JFrame {
 
         prce.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        jButton2.setText("SUBMIT");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        subbtn.setText("SUBMIT");
+        subbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                subbtnActionPerformed(evt);
+            }
+        });
+
+        svbtn.setText("SAVE");
+        svbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                svbtnActionPerformed(evt);
             }
         });
 
@@ -98,42 +111,52 @@ public class addproduct extends javax.swing.JFrame {
                 .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(addLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(addLayout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(prce))
+                                .addGroup(addLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(pdn, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(addLayout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(qty))
-                            .addGroup(addLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(prce))
-                            .addGroup(addLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(pdn, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(addLayout.createSequentialGroup()
                         .addGap(160, 160, 160)
-                        .addComponent(jButton2)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(subbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(svbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(addLayout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(prdid)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         addLayout.setVerticalGroup(
             addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(9, 9, 9)
+                .addComponent(prdid, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pdn, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(34, 34, 34)
-                .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(qty)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(addLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(prce))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addComponent(subbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(svbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -159,6 +182,20 @@ public class addproduct extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("DELETE");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("EDIT");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -169,6 +206,10 @@ public class addproduct extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -178,7 +219,10 @@ public class addproduct extends javax.swing.JFrame {
                 .addGap(96, 96, 96)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -191,7 +235,7 @@ add.setVisible(true);add.setLocationRelativeTo(null);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 //d
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void subbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subbtnActionPerformed
 product_class pc = new product_class();
 
 String pdname = pdn.getText();
@@ -205,9 +249,89 @@ if(girl==1){
 }else{
     
 }
+add.setVisible(false);
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_subbtnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+ int selRow = tbls1.getSelectedRow();
+ if(selRow != -1){
+String a = tbls1.getValueAt(selRow, 0).toString();
+String sql = "delete from products where ID=?;";
+int opt = JOptionPane.showConfirmDialog(rootPane, "ARE YOU SURE YOU WANT TO DELETE DATA?","REMOVE DATA",JOptionPane.YES_NO_OPTION);
+if(opt == 0){
+    try{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/register?", "root", "");
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, a);
+        pstmt.executeUpdate();
+        showResult();
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+ }
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+int row = tbls1.getSelectedRow();
+if(row==-1){
+    JOptionPane.showMessageDialog(tbls1, "PLEASE SELECT DATA ON THE TABLE","ERROR",JOptionPane.ERROR_MESSAGE);
+    
+}else{
+    int opt = JOptionPane.showConfirmDialog(tbls1, "ARE YOU SURE YOU WANT TO EDIT THIS DATA","CONFIRMATION",JOptionPane.YES_NO_OPTION);
+    if(opt==JOptionPane.YES_OPTION){
+        String id = tbls1.getValueAt(row, 0).toString();
+        String pdname = tbls1.getValueAt(row, 1).toString();
+        String pdqu = tbls1.getValueAt(row, 2).toString();
+        String pdpri = tbls1.getValueAt(row, 3).toString();
+        prdid.setText(id);
+        pdn.setText(pdname);
+        prce.setText(pdpri);
+        this.setVisible(false);
+        add.setVisible(true);
+    }
+}subbtn.setVisible(false); svbtn.setVisible(true);qty.setEnabled(false);add.setLocationRelativeTo(null);this.setLocationRelativeTo(null);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void svbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_svbtnActionPerformed
+int id = Integer.parseInt(prdid.getText());
+String pdname = pdn.getText();
+String pdqu = qty.getToolTipText();
+String pdpri = prce.getText();
+
+try{
+  String sql = "update products set PRODUCT_NAME=?, PRICE=? where ID=?;";
+  Class.forName("com.mysql.jdbc.Driver");
+  Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/register?", "root", "");
+  PreparedStatement pstmt = con.prepareStatement(sql);
+    pstmt.setString(1, pdname);
+    pstmt.setString(2, pdpri);
+    pstmt.setInt(3, id);
+    if(pdn.getText().equals("") || prce.getText().equals("")){
+    JOptionPane.showMessageDialog(add, "PLEASE FILL UP ALL FIELDS","WARNING",JOptionPane.WARNING_MESSAGE);    
+    }else{
+        pstmt.executeUpdate();
+        pdn.setText("");
+        prce.setText("");
+        add.setVisible(false);
+        addproduct adprt = new addproduct();
+        adprt.setVisible(true);
+    }
+  
+}       catch (ClassNotFoundException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_svbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,14 +371,26 @@ if(girl==1){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame add;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField pdn;
     private javax.swing.JFormattedTextField prce;
+    private javax.swing.JLabel prdid;
     private javax.swing.JSpinner qty;
+    private javax.swing.JButton subbtn;
+    private javax.swing.JButton svbtn;
     private javax.swing.JTable tbls1;
     // End of variables declaration//GEN-END:variables
+
+    private void removeName(int ii, JTextField pdn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void addToList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
