@@ -29,6 +29,30 @@ public class addproduct extends javax.swing.JFrame {
     public addproduct() {
         initComponents();
         showResult();
+    }public void search(){
+     String pdname = srchflds.getText();
+        
+        try{
+            String sql = "select * from products where PRODUCT_NAME like ?;";
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/register?", "root", "");
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, "%"+pdname+"%");
+            ResultSet rs = pstmt.executeQuery();
+            DefaultTableModel tbls = (DefaultTableModel)tbls1.getModel();
+            tbls.setRowCount(0);
+            if(!rs.isBeforeFirst()){
+                 tbls.addRow(new Object[]{"NO DATA"});
+            }else{
+                while(rs.next()){
+                  tbls.addRow(new Object[]{rs.getInt("ID"),rs.getString("PRODUCT_NAME"),rs.getInt("QUANTITY"),rs.getString("PRICE")});
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(addproduct.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
     public void showResult(){
         String sql = "select * from products;";
@@ -76,6 +100,8 @@ public class addproduct extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        srchflds = new javax.swing.JTextField();
 
         add.setMinimumSize(new java.awt.Dimension(425, 340));
 
@@ -196,6 +222,14 @@ public class addproduct extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("PRODUCT NAME:");
+
+        srchflds.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                srchfldsKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,13 +244,21 @@ public class addproduct extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(srchflds)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(srchflds, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,6 +375,10 @@ try{
         // TODO add your handling code here:
     }//GEN-LAST:event_svbtnsActionPerformed
 
+    private void srchfldsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_srchfldsKeyReleased
+search();        // TODO add your handling code here:
+    }//GEN-LAST:event_srchfldsKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -376,11 +422,13 @@ try{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField pdna;
     private javax.swing.JFormattedTextField prce;
     private javax.swing.JLabel prdid;
     private javax.swing.JSpinner qty;
+    private javax.swing.JTextField srchflds;
     private javax.swing.JButton subbtn;
     private javax.swing.JButton svbtns;
     private javax.swing.JTable tbls1;
